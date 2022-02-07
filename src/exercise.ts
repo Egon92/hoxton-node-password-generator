@@ -28,7 +28,7 @@ const result_1 = getAllowedCharacters();
 // console.log(result_1);
 
 // given an array, return a random item from it
-function getRandomItemFromArray(array: string | number[]): string | number {
+function getRandomItemFromArray(array: (string | number)[]): string | number {
   const randomIndex: number = Math.floor(Math.random() * array.length);
 
   return array[randomIndex];
@@ -37,23 +37,23 @@ function getRandomItemFromArray(array: string | number[]): string | number {
 // console.log(result_2);
 
 // make sure at least one of the required characters is present, to pass a potential validator
-function getMandatoryCharacters(): string | number[] {
+function getMandatoryCharacters(): (string | number)[] {
   const result = [];
 
   if (mustHaveLowerCaseLetters) {
-    const character: string[] = getRandomItemFromArray(lowerCaseLetters);
+    const character: string | number = getRandomItemFromArray(lowerCaseLetters);
     result.push(character);
   }
   if (mustHaveUpperCaseLetters) {
-    const character: string[] = getRandomItemFromArray(upperCaseLetters);
+    const character: string | number = getRandomItemFromArray(upperCaseLetters);
     result.push(character);
   }
   if (mustHaveSpecialCharacters) {
-    const character: string[] = getRandomItemFromArray(specialChars);
+    const character: string | number = getRandomItemFromArray(specialChars);
     result.push(character);
   }
   if (mustHaveNumbers) {
-    const number: number[] = getRandomItemFromArray(numbers);
+    const number: string | number = getRandomItemFromArray(numbers);
     result.push(number);
   }
 
@@ -64,9 +64,9 @@ const result_3 = getMandatoryCharacters();
 console.log(result_3);
 
 // fill the rest of the password with whatever is allowed
-function getRandomCharacters(numberOfCharacters: any): string | number[] {
-  const randomCharacters = [];
-  const allowedCharacters = getAllowedCharacters();
+function getRandomCharacters(numberOfCharacters: number): (string | number)[] {
+  const randomCharacters: (string | number)[] = [];
+  const allowedCharacters: (string | number)[] = getAllowedCharacters();
 
   for (let i = 1; i <= numberOfCharacters; i++) {
     const randomChar: string | number =
@@ -85,15 +85,18 @@ console.log(shuffleArray([3, "f", 5, 7, "g"]));
 
 // generate the final result
 function generatePassword(): void {
-  const requiredCharacters = getMandatoryCharacters();
-  const remainingCharacters = getRandomCharacters(
+  const requiredCharacters: (string | number)[] = getMandatoryCharacters();
+  const remainingCharacters: (string | number)[] = getRandomCharacters(
     passwordLength - requiredCharacters.length
   );
 
-  const generatedCharacters = [...requiredCharacters, ...remainingCharacters];
-  const shuffledChars = shuffleArray(generatedCharacters);
+  const generatedCharacters: (string | number)[] = [
+    ...requiredCharacters,
+    ...remainingCharacters,
+  ];
+  const shuffledChars: (string | number)[] = shuffleArray(generatedCharacters);
 
-  const password = shuffledChars.join("");
+  const password: string = shuffledChars.join("");
   if (!password.length) {
     console.log("Please set at least one condition to generate password");
   } else {
